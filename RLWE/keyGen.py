@@ -22,8 +22,10 @@ def public_key_gen(q, n, N, s):
         A.append(r)
     A = np.array(A)
 
+    e = np.empty(N)
+    for i in range(N):
+        e[i] = cryptogen.randint(0, q)
 
-    e = np.random.randint(0, q, N)
     b = np.dot(A, s[1:]) + 2 * e
     b.resize(N, 1)
     A = np.hstack((b, -1 * A)) % q
@@ -33,4 +35,4 @@ def public_key_gen(q, n, N, s):
 
 s = secret_key_gen(100, 5)
 
-public_key_gen(100, 3, 4, [2])
+public_key_gen(100, 3, 4, s)
