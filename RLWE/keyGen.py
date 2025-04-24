@@ -1,4 +1,4 @@
-from Polynomial_functions import polynomial_mod_mult, polynomial_mod_add, generate_random_poly_coef1, generate_random_poly
+from Polynomial_functions import polynomial_mod_mult, polynomial_mod_add, generate_random_poly_coef1, generate_random_poly, generate_gausian_poly
 import numpy as np
 from typing import Tuple
 
@@ -29,8 +29,8 @@ def encrypt2(m : str,                      # The message to be encrypted
     pk0, pk1 = pk
     polynomial_degree = len(pk0)
     u = generate_random_poly_coef1(polynomial_degree) 
-    e0 = generate_random_poly_coef1(polynomial_degree)
-    e1 = generate_random_poly_coef1(polynomial_degree)
+    e0 = generate_gausian_poly(polynomial_degree)
+    e1 = generate_gausian_poly(polynomial_degree)
 
     #scale m up so that it isn't lost in the noise
     m_scaled = np.array([((int(bit))*(ciphertext_modulus // plaintext_modulus)) % ciphertext_modulus for bit in m])
@@ -51,9 +51,9 @@ def decrypt2(ciphertext: Tuple[np.array, np.array],         # Ciphertext
     #msg = c1 * s + c1
     decrypted = polynomial_mod_add(c0, polynomial_mod_mult(c1, s, ciphertext_modulus), ciphertext_modulus)
     #undo scaling
-    scaled = (decrypted * plaintext_modulus + ciphertext_modulus // 2) // ciphertext_modulus
+    descaled = (decrypted * plaintext_modulus + ciphertext_modulus // 2) // ciphertext_modulus
     #take the modulus
-    result = scaled % plaintext_modulus
+    result = descaled % plaintext_modulus
     ans = ""
     for num in result:
         ans += str(int(num))

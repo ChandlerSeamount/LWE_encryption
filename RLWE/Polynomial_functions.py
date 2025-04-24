@@ -52,3 +52,9 @@ def generate_random_poly_coef1(polynomial_degree : int   # the degree of the cre
         else:
             s = np.append(s, -1)
     return s
+
+def generate_gausian_poly(polynomial_degree : int,   # the degree of the created polynomial
+                          mu : int = 0,                  # the mean of the dist
+                          std: int = 3.8) -> np.array:   # the standard deviation
+    cryptogen = SystemRandom() 
+    return np.array([round(cryptogen.gauss(mu, std)) for _ in range(polynomial_degree)], dtype=object)
