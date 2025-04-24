@@ -1,38 +1,21 @@
+from Polynomial_functions import polynomial_mod_mult, polynomial_mod_add, generate_random_poly_coef1, generate_random_poly, generate_gausian_poly
 import numpy as np
-from random import SystemRandom
-import math
+from typing import Tuple
 
-def secret_key_gen(q,n):
-    cryptogen = SystemRandom() 
-    s =np.empty(n+1)
-    for i in range(0, n+1):
-        s[i] = cryptogen.randint(0, q)
-    s[0] = 1
-    return s
+def secret_key_gen(polynomial_degree : int   # the degree of the created polynomial
+                   ) -> np.array:
+    return generate_random_poly_coef1(polynomial_degree)
 
-def public_key_gen(q, n, N, s):
-    cryptogen = SystemRandom() 
+def generate_keys(polynomial_degree : int,   # the degree of the created polynomial
+                  ciphertext_modulus : int,   # the ciphertext modulus
+                  ) -> Tuple[np.array, np.array, np.array]:
+    # random key
+    s = secret_key_gen(polynomial_degree)
+    # random arr
+    a = generate_random_poly(polynomial_degree, ciphertext_modulus)
+    # random error
+    e = generate_random_poly_coef1(polynomial_degree)
+    # b = (-a*s) + e
+    b = polynomial_mod_add(- polynomial_mod_mult(a, s, ciphertext_modulus), e, ciphertext_modulus)
 
-    A = []
-    for i in range(0, n):
-        r = []
-        for j in range(0, N):
-            x = cryptogen.randint(0, q)
-            r.append(x)
-        A.append(r)
-    A = np.array(A)
-
-    e = np.empty(N)
-    for i in range(N):
-        e[i] = cryptogen.randint(0, q)
-
-    b = np.dot(A, s[1:]) + 2 * e
-    b.resize(N, 1)
-    A = np.hstack((b, -1 * A)) % q
-    assert all(np.dot(A, s) % q == (2 * e) % q)
-    return A
-
-
-s = secret_key_gen(100, 5)
-
-public_key_gen(100, 3, 4, s)
+    return (a, b), s
