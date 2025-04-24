@@ -59,10 +59,14 @@ def decrypt2(ciphertext: Tuple[np.array, np.array],         # Ciphertext
         ans += str(int(num))
     return ans
 
-public_key, secret_key = generate_keys(5, 1024)
-message = "11001"
-ciphertext = encrypt2(message, public_key, 1024, 2)
-decrypted_message = decrypt2(ciphertext, secret_key, 1024, 2)
+ciphertext_modulus = 1024
+plaintext_modulus = 7
+message = "110110101010"
 
-print("Original Message:", message)
+
+public_key, secret_key = generate_keys(len(message), ciphertext_modulus)
+ciphertext = encrypt2(message, public_key, ciphertext_modulus, plaintext_modulus)
+decrypted_message = decrypt2(ciphertext, secret_key, ciphertext_modulus, plaintext_modulus)
+
+print("Original Message: ", message)
 print("Decrypted Message:", decrypted_message)
