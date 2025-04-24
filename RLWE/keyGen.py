@@ -1,4 +1,4 @@
-from Polynomial_functions import polynomial_mod_mult, polynomial_mod_add, generate_random_poly_coef1, generate_random_poly, polynomial_mod_sub
+from Polynomial_functions import polynomial_mod_mult, polynomial_mod_add, generate_random_poly_coef1, generate_random_poly
 import numpy as np
 from typing import Tuple
 

@@ -11,15 +11,6 @@ def polynomial_mod_add(p1 : np.array,
     p2 = np.resize(p2, length)
     return (p1 + p2) % q
 
-def polynomial_mod_sub(p1 : np.array,
-                       p2 : np.array, 
-                       q : int) -> np.array:
-    length = max(len(p1), len(p2))
-    p1 = np.resize(p1, length)
-    p2 = np.resize(p2, length)
-    return (p1 - p2) % q
-
-
 def polynomial_mod_mult(p1 : np.array,
                        p2 : np.array,
                        q : int) -> np.array:
