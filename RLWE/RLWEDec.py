@@ -35,7 +35,9 @@ def mod_center(x, m: int):
     else:
         return (x + m // 2) % m - m // 2
 
-"""q = 11
+"""
+tried to do en example here to no avail
+q = 11
 n = 4
 plaintext_mod = 2
 
