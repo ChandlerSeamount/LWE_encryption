@@ -3,9 +3,9 @@ from RLWEDec import decrypt2
 from RLWEEnc import encrypt2
 
 if __name__ == "__main__":
-    ciphertext_modulus = 1024
+    ciphertext_modulus = 2048
     plaintext_modulus = 7
-    message = "110110101010"
+    message = "123456"
 
 
     public_key, secret_key = generate_keys(len(message), ciphertext_modulus)
