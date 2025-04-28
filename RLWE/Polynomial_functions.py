@@ -1,5 +1,6 @@
 import numpy as np
 from random import SystemRandom
+from numpy.fft import rfft, irfft
 
 #polynomial math
 
@@ -16,10 +17,7 @@ def polynomial_mod_mult(p1 : np.array,
                        q : int) -> np.array:
     n = len(p1)
 
-    prod = np.array([0] * (2 * n - 1))
-    for i in range(n):
-        for j in range(n):
-            prod[i + j] += p1[i] * p2[j]
+    prod = np.array(fftMultiplication(p1.tolist(), p2.tolist()))
     
     #result = prod mod x^n +1
     result = np.array([0] * n)
@@ -28,6 +26,12 @@ def polynomial_mod_mult(p1 : np.array,
         quotient, remainder = divmod(i, n)
         result[remainder] = (result[remainder] + (-1)**quotient * coeff) % q
     return result
+
+def fftMultiplication(p1, p2):  #fft based real-valued polynomial multiplication
+    L = len(p1) + len(p2)
+    p_1_forier = rfft(p1, L)
+    p_2_forier = rfft(p2, L)
+    return irfft(p_1_forier * p_2_forier)
 
 #polynomial generation
 
