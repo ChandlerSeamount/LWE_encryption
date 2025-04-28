@@ -14,7 +14,7 @@ def encrypt2(m : str,                      # The message to be encrypted
     e1 = generate_gausian_poly(polynomial_degree)
 
     #scale m up so that it isn't lost in the noise
-    m_scaled = np.array([((int(bit))*(ciphertext_modulus // plaintext_modulus)) % ciphertext_modulus for bit in m])
+    m_scaled = np.array([((int(bit))*(ciphertext_modulus // plaintext_modulus)) for bit in m])
 
     #c0 = pk0 * u + msg + e0
     c0 = polynomial_mod_add(polynomial_mod_add(polynomial_mod_mult(u, pk1, ciphertext_modulus), m_scaled, ciphertext_modulus),e0, ciphertext_modulus)
