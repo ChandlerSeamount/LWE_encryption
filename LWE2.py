@@ -86,18 +86,19 @@ class LWE:
             else:
                 mes += '1'
         return mes
+    
+if __name__ == "__main__":
+    # np.random.seed()
+    # Make two people to exchange keys. 
+    alice = LWE()
+    bob = LWE()
 
-# np.random.seed()
-# Make two people to exchange keys. 
-alice = LWE()
-bob = LWE()
+    # Generate their keys
+    alice_pk = alice.gen()
+    bob_pk = bob.gen()
 
-# Generate their keys
-alice_pk = alice.gen()
-bob_pk = bob.gen()
-
-# Encrypt then decrypt the message
-message = "100111010011"
-ct = alice.encrypt(message, bob_pk)
-m = bob.decrpyt(ct)
-print(m)
+    # Encrypt then decrypt the message
+    message = "100111010011"
+    ct = alice.encrypt(message, bob_pk)
+    m = bob.decrpyt(ct)
+    print(m)
